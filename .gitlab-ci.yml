@@ -31,11 +31,11 @@ clang:
     - |
       FILES=$(git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -E '\.(c|cpp|h|hpp)$' || true)
       for file in $FILES; do
-        clang-format "$%file" | diff -u "$file" - || exit 1
+        clang-format "$file" | diff -u "$file" - || exit 1
       done
-    rules:
-      - if: $CI_PIPELINE_SOURCE == "push"
-      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 sast:
   stage: test
 include:
