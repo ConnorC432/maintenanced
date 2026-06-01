@@ -9,7 +9,6 @@ add_executable(maintenanced
         src/Display/HyprlandBackend.cpp
         src/Display/HyprlandBackend.h
         src/Display/DisplayBackend.h
-        src/Display/main.cpp
         src/Display/KDEBackend.cpp
         src/Display/KDEBackend.h
         src/Display/SwayBackend.cpp
