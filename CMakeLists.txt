@@ -3,6 +3,8 @@ project(maintenanced)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(maintenanced)
+add_executable(maintenanced
+        src/Display/DisplayController.cpp
+        src/Display/DisplayController.h)
 
 target_include_directories(maintenanced PRIVATE include)
