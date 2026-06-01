@@ -16,6 +16,14 @@ add_executable(maintenanced
         src/Display/KDEBackend.cpp
         src/Display/KDEBackend.h
         src/Display/X11Backend.cpp
-        src/Display/X11Backend.h)
+        src/Display/X11Backend.h
+        src/Packages/PackageManagerController.cpp
+        src/Packages/PackageManagerController.h
+        src/Packages/PackageBackend.h
+        src/Packages/PacmanBackend.cpp
+        src/Packages/PacmanBackend.h
+        src/Packages/AptBackend.cpp
+        src/Packages/AptBackend.h
+)
 
 target_include_directories(maintenanced PRIVATE include)
