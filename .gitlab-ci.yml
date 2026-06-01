@@ -8,6 +8,8 @@ clang:
   script:
     - |
       FILES=$(git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -E '\.(c|cpp|h|hpp)$' || true)
+      echo "Changed files:"
+      echo "$FILES"
       for file in $FILES; do
         clang-format "$file" | diff -u "$file" - || exit 1
       done
