@@ -5,6 +5,10 @@ All rights reserved.
 */
 
 #include "DisplayController.h"
+#include "HyprlandBackend.h"
+#include "KDEBackend.h"
+#include "SwayBackend.h"
+#include "X11Backend.h"
 
 namespace Display {
 
@@ -31,6 +35,26 @@ std::unique_ptr<DisplayBackend> DisplayController::createBackend() {
 
   std::string s = session ? session : "";
   std::string d = desktop ? desktop : "";
+
+  // Hyprland
+  if (d.find("Hyprland") != std::string::npos) {
+    return std::make_unique<HyprlandBackend>();
+  }
+
+  // KDE
+  if (d.find("KDE") != std::string::npos) {
+    return std::make_unique<KDEBackend>();
+  }
+
+  // Sway
+  if (d.find("Sway") != std::string::npos) {
+    return std::make_unique<SwayBackend>();
+  }
+
+  // X11
+  if (s.find("x11") != std::string::npos) {
+    return std::make_unique<X11Backend>();
+  }
 }
 
 }  // namespace Display
