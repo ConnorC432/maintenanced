@@ -1,7 +1,13 @@
 cmake_minimum_required(VERSION 3.10)
 project(maintenanced)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_compile_options(-fcoroutines)
+
+# Source Files
 
 add_executable(maintenanced
         src/Display/DisplayController.cpp
@@ -27,3 +33,7 @@ add_executable(maintenanced
 )
 
 target_include_directories(maintenanced PRIVATE include)
+
+# sdbus c++
+find_package(sdbus-c++ REQUIRED)
+TARGET_LINK_LIBRARIES(maintenanced PRIVATE sdbus-c++)
