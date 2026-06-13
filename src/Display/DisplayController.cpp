@@ -5,6 +5,7 @@ All rights reserved.
 */
 
 #include "DisplayController.h"
+
 #include "HyprlandBackend.h"
 #include "KDEBackend.h"
 #include "SwayBackend.h"

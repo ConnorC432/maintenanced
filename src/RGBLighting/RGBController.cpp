@@ -9,15 +9,13 @@ All rights reserved.
 #include <OpenRGB/Client.hpp>
 #include <OpenRGB/Color.hpp>
 #include <OpenRGB/DeviceInfo.hpp>
-
 #include <chrono>
 #include <thread>
 
 namespace rgb {
 
 RGBController::RGBController(std::string host, int port)
-  : host_(std::move(host)), port_(port)
-{}
+    : host_(std::move(host)), port_(port) {}
 
 bool RGBController::turnOffRGB() {
   orgb::Client client("RGBController");

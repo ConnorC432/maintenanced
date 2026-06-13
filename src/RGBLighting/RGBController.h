@@ -12,15 +12,12 @@ All rights reserved.
 namespace rgb {
 
 class RGBController {
-
-public:
-  explicit RGBController(
-    std::string host = "127.0.0.1",
-    int port = 6742);
+ public:
+  explicit RGBController(std::string host = "127.0.0.1", int port = 6742);
 
   bool turnOffRGB();
 
-private:
+ private:
   std::string host_;
   int port_;
 
