@@ -1,5 +1,5 @@
 stages:
-- lint
+  - lint
 clang:
   stage: lint
   image: alpine:latest
@@ -8,8 +8,6 @@ clang:
   script:
     - |
       FILES=$(find . \( -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \))
-      echo "Changed files:"
-      echo "$FILES"
       for file in $FILES; do
         clang-format "$file" | diff -u "$file" - || exit 1
       done
