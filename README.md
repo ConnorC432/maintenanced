@@ -8,9 +8,18 @@ This program aims to download/update anything required in a low power state befo
 
 ## Installation
 
+### From source
+1. Clone the repo and initialise submodules
+
+```bash
+git clone https://git.anorlondo.dev/AnorLondo/maintenanced.git
+git submodule update --init --recursive
+```
+
 ## Requirements
 | Requirement | License |
 |-------------|---------|
+| [OpenRGB-cppSDK](https://github.com/Youda008/OpenRGB-cppSDK) | MIT |
 
 ## Configuration
 (Add config info in a wiki or just the readme?)

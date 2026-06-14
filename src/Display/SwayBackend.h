@@ -8,6 +8,7 @@ All rights reserved.
 #define MAINTENANCED_SWAYBACKEND_H
 
 #include <string>
+
 #include "DisplayBackend.h"
 
 namespace Display {
