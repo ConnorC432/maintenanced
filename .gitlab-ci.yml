@@ -1,15 +1,13 @@
 stages:
-- lint
+  - lint
 clang:
   stage: lint
   image: alpine:latest
   before_script:
-    - apk add --no-cache clang git
+    - apk add --no-cache clang clang-extra-tools git
   script:
     - |
       FILES=$(find . \( -name '*.c' -o -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \))
-      echo "Changed files:"
-      echo "$FILES"
       for file in $FILES; do
         clang-format "$file" | diff -u "$file" - || exit 1
       done
