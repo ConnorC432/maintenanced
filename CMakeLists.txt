@@ -23,6 +23,9 @@ add_executable(maintenanced
         src/Display/KDEBackend.h
         src/Display/X11Backend.cpp
         src/Display/X11Backend.h
+        src/RGBLighting/RGBController.cpp
+        src/RGBLighting/RGBController.h
+        src/Display/X11Backend.h
         src/Packages/PackageManagerController.cpp
         src/Packages/PackageManagerController.h
         src/Packages/PackageBackend.h
@@ -33,6 +36,10 @@ add_executable(maintenanced
 )
 
 target_include_directories(maintenanced PRIVATE include)
+
+# OpenRGB CXX SDK
+add_subdirectory(ThirdParty/OpenRGB-cppSDK)
+target_link_libraries(maintenanced PRIVATE orgbsdk)
 
 # sdbus c++
 find_package(sdbus-c++ REQUIRED)
