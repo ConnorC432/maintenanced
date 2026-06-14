@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 project(maintenanced)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -8,7 +8,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_compile_options(-fcoroutines)
 
 # Source Files
-
 add_executable(maintenanced
         src/Display/DisplayController.cpp
         src/Display/DisplayController.h
@@ -19,13 +18,10 @@ add_executable(maintenanced
         src/Display/KDEBackend.h
         src/Display/SwayBackend.cpp
         src/Display/SwayBackend.h
-        src/Display/KDEBackend.cpp
-        src/Display/KDEBackend.h
         src/Display/X11Backend.cpp
         src/Display/X11Backend.h
         src/RGBLighting/RGBController.cpp
         src/RGBLighting/RGBController.h
-        src/Display/X11Backend.h
         src/Packages/PackageManagerController.cpp
         src/Packages/PackageManagerController.h
         src/Packages/PackageBackend.h
