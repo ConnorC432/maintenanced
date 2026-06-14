@@ -4,4 +4,5 @@ Description=maintenanced pacman service
 [Service]
 Type=oneshot
 ExecStart=/usr/bin/apt update && /usr/bin/apt upgrade -y
-BusName=org.maintenanced.Updater1
+StandardOutput=journal
+StandardError=journal
