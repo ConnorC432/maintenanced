@@ -38,5 +38,5 @@ add_subdirectory(ThirdParty/OpenRGB-cppSDK)
 target_link_libraries(maintenanced PRIVATE orgbsdk)
 
 # sdbus c++
-find_package(sdbus-c++ REQUIRED)
-TARGET_LINK_LIBRARIES(maintenanced PRIVATE sdbus-c++)
+add_subdirectory(ThirdParty/sdbus-cpp)
+target_link_libraries(maintenanced PRIVATE SDBusCpp::sdbus-c++)
