@@ -2,7 +2,7 @@ stages:
   - lint
 clang:
   stage: lint
-  image: alpine:latest
+  image: registry.anorlondo.dev/anorlondo/build-images/alpine:3.23
   before_script:
     - apk add --no-cache clang clang-extra-tools git
   script:
