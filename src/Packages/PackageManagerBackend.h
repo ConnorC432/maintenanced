@@ -19,7 +19,7 @@ class PackageManagerBackend {
 
   [[nodiscard]] std::string backendName() const;
 
-private:
+ private:
   std::string unitName_;
   std::string backendName_;
 };

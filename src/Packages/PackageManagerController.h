@@ -21,13 +21,14 @@ class PackageManagerController {
  public:
   PackageManagerController();
 
-  bool update()const;
+  bool update() const;
 
   [[nodiscard]] std::string backendName() const;
 
  private:
   std::vector<std::unique_ptr<PackageManagerBackend>> backends;
-  static std::vector<std::unique_ptr<PackageManagerBackend>> findBackends();;
+  static std::vector<std::unique_ptr<PackageManagerBackend>> findBackends();
+  ;
 };
 
 }  // namespace Packages
