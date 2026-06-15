@@ -8,8 +8,7 @@ All rights reserved.
 
 #include <fstream>
 
-#include "AptBackend.h"
-#include "PacmanBackend.h"
+#include "PackageManagerBackend.h"
 
 namespace Packages {
 
@@ -22,7 +21,7 @@ PackageManagerController::PackageManagerController() {
   backends = findBackends();
 }
 
-bool PackageManagerController::update(){
+bool PackageManagerController::update() const {
   if (backends.empty()) return false;
 
   bool success = false;
@@ -36,27 +35,74 @@ bool PackageManagerController::update(){
   return success;
 }
 
-std::string PackageManagerController::backendName() const{
+std::string PackageManagerController::backendName() const {
   if (backends.empty()) return "None";
 
   std::string names;
 
   for (const auto& backend : backends) {
-    names += backend->name() + ", ";
+    names += backend->backendName() + ", ";
   }
 
   return names;
 }
 
-std::vector<std::unique_ptr<PackageBackend>> PackageManagerController::findBackends() {
-  std::vector<std::unique_ptr<PackageBackend>> foundBackends;
+std::vector<std::unique_ptr<PackageManagerBackend>>
+PackageManagerController::findBackends() {
+  std::vector<std::unique_ptr<PackageManagerBackend>> foundBackends;
 
   if (commandExists("apt")) {
-    foundBackends.push_back(std::make_unique<AptBackend>());
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-apt.service", "apt"));
   }
 
   if (commandExists("pacman")) {
-    foundBackends.push_back(std::make_unique<PacmanBackend>());
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-pacman.service", "pacman"));
+  }
+
+  if (commandExists("apk")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-apk.service", "apk"));
+  }
+
+  if (commandExists("brew")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-brew.service", "brew"));
+  }
+
+  if (commandExists("dnf")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-dnf.service", "dnf"));
+  } else if (commandExists("yum")) {
+    // No need to use yum if dnf is available
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-yum.service", "yum"));
+  }
+
+  if (commandExists("emerge")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-emerge.service", "emerge"));
+  }
+
+  if (commandExists("flatpak")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-flatpak.service", "flatpak"));
+  }
+
+  if (commandExists("snap")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-snap.service", "snap"));
+  }
+
+  if (commandExists("xbps-install")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-xbps.service", "xbps"));
+  }
+
+  if (commandExists("zypper")) {
+    foundBackends.push_back(std::make_unique<PackageManagerBackend>(
+        "maintenanced-zypper.service", "zypper"));
   }
 
   return foundBackends;

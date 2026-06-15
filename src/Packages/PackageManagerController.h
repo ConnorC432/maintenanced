@@ -11,23 +11,23 @@ All rights reserved.
 #include <string>
 #include <vector>
 
-#include "PackageBackend.h"
+#include "PackageManagerBackend.h"
 
 namespace Packages {
 
-class PackageBackend;
+class PackageManagerBackend;
 
 class PackageManagerController {
  public:
   PackageManagerController();
 
-  bool update();
+  bool update()const;
 
   [[nodiscard]] std::string backendName() const;
 
  private:
-  std::vector<std::unique_ptr<PackageBackend>> backends;
-  std::vector<std::unique_ptr<PackageBackend>> findBackends();;
+  std::vector<std::unique_ptr<PackageManagerBackend>> backends;
+  static std::vector<std::unique_ptr<PackageManagerBackend>> findBackends();;
 };
 
 }  // namespace Packages

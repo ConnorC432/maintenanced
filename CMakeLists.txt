@@ -24,11 +24,6 @@ add_executable(maintenanced
         src/RGBLighting/RGBController.h
         src/Packages/PackageManagerController.cpp
         src/Packages/PackageManagerController.h
-        src/Packages/PackageBackend.h
-        src/Packages/PacmanBackend.cpp
-        src/Packages/PacmanBackend.h
-        src/Packages/AptBackend.cpp
-        src/Packages/AptBackend.h
 )
 
 target_include_directories(maintenanced PRIVATE include)

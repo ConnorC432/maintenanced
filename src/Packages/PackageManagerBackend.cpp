@@ -1,10 +1,10 @@
 /*
-Created by Connor on 01/06/2026.
+Created by Connor on 15/06/2026.
 Copyright (c) 2026
 All rights reserved.
 */
 
-#include "PacmanBackend.h"
+#include "PackageManagerBackend.h"
 
 #include <sdbus-c++/sdbus-c++.h>
 
@@ -23,8 +23,13 @@ static constexpr const char* UNIT_IFACE = "org.freedesktop.systemd1.Unit";
 static constexpr const char* PROPS_IFACE = "org.freedesktop.DBus.Properties";
 
 namespace Packages {
-bool PacmanBackend::update() {
-  const std::string unitName = "maintenanced-pacman.service";
+PackageManagerBackend::PackageManagerBackend(std::string unitName,
+                                             std::string backendName)
+    : unitName_(std::move(unitName)), backendName_(std::move(backendName)) {}
+
+std::string PackageManagerBackend::backendName() const { return backendName_; }
+
+bool PackageManagerBackend::update() {
   auto connection = sdbus::createSystemBusConnection();
   connection->enterEventLoopAsync();
 
@@ -37,7 +42,7 @@ bool PacmanBackend::update() {
   sdbus::ObjectPath unitPath;
   systemd->callMethod("LoadUnit")
       .onInterface(MANAGER_IFACE)
-      .withArguments(unitName)
+      .withArguments(unitName_)
       .storeResultsTo(unitPath);
 
   auto unit = sdbus::createProxy(*connection, sdbus::ServiceName{SYSTEMD_BUS},
@@ -96,7 +101,7 @@ bool PacmanBackend::update() {
   sdbus::ObjectPath jobPath;
   systemd->callMethod("StartUnit")
       .onInterface(MANAGER_IFACE)
-      .withArguments(unitName, "replace")
+      .withArguments(unitName_, "replace")
       .storeResultsTo(jobPath);
   {
     std::unique_lock lk(m);
@@ -125,7 +130,5 @@ bool PacmanBackend::update() {
 
   return true;
 }
-
-std::string PacmanBackend::name() const { return "pacman"; }
 
 }  // namespace Packages
