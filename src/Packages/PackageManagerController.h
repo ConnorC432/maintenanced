@@ -9,6 +9,7 @@ All rights reserved.
 
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "PackageBackend.h"
 
@@ -25,16 +26,8 @@ class PackageManagerController {
   [[nodiscard]] std::string backendName() const;
 
  private:
-  struct DistroInfo {
-    std::string id;
-    std::string name;
-  };
-
-  DistroInfo determineDistro();
-
-  std::unique_ptr<PackageBackend> backend;
-
-  std::unique_ptr<PackageBackend> createBackend(const DistroInfo& info);
+  std::vector<std::unique_ptr<PackageBackend>> backends;
+  std::vector<std::unique_ptr<PackageBackend>> findBackends();;
 };
 
 }  // namespace Packages

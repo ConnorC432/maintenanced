@@ -12,64 +12,53 @@ All rights reserved.
 #include "PacmanBackend.h"
 
 namespace Packages {
+
+static bool commandExists(const std::string& command) {
+  std::string check = "command -v " + command + " >/dev/null 2>&1";
+  return std::system(check.c_str()) == 0;
+}
+
 PackageManagerController::PackageManagerController() {
-  DistroInfo info = determineDistro();
-  backend = createBackend(info);
-}
-bool PackageManagerController::update() {
-  if (!backend) return false;
-  return backend->update();
-}
-std::string PackageManagerController::backendName() const {
-  if (!backend) return "None";
-
-  // return info.name;
-  return backend->name();
-}
-std::unique_ptr<PackageBackend> PackageManagerController::createBackend(
-    const DistroInfo& info) {
-  if (info.id.find("arch") != std::string::npos) {
-    return std::make_unique<PacmanBackend>();
-  }
-
-  if (info.id.find("ubuntu") != std::string::npos) {
-    return std::make_unique<AptBackend>();
-  }
-
-  // TODO improve fallback
-  return std::make_unique<PacmanBackend>();
+  backends = findBackends();
 }
 
-PackageManagerController::DistroInfo
-PackageManagerController::determineDistro() {
-  std::ifstream file("/etc/os-release");
+bool PackageManagerController::update(){
+  if (backends.empty()) return false;
 
-  DistroInfo info;
+  bool success = false;
 
-  if (!file.is_open()) {
-    return info;
-  }
-
-  std::string line;
-
-  while (std::getline(file, line)) {
-    auto pos = line.find('=');
-    if (pos == std::string::npos) continue;
-
-    std::string key = line.substr(0, pos);
-    std::string value = line.substr(pos + 1);
-
-    // Remove quotes
-    if (!value.empty() && value.front() == '"') value.erase(0, 1);
-    if (!value.empty() && value.back() == '"') value.pop_back();
-
-    if (key == "ID") {
-      info.id = value;
-    } else if (key == "NAME") {
-      info.name = value;
+  for (const auto& backend : backends) {
+    if (backend->update()) {
+      success = true;
     }
   }
 
-  return info;
+  return success;
+}
+
+std::string PackageManagerController::backendName() const{
+  if (backends.empty()) return "None";
+
+  std::string names;
+
+  for (const auto& backend : backends) {
+    names += backend->name() + ", ";
+  }
+
+  return names;
+}
+
+std::vector<std::unique_ptr<PackageBackend>> PackageManagerController::findBackends() {
+  std::vector<std::unique_ptr<PackageBackend>> foundBackends;
+
+  if (commandExists("apt")) {
+    foundBackends.push_back(std::make_unique<AptBackend>());
+  }
+
+  if (commandExists("pacman")) {
+    foundBackends.push_back(std::make_unique<PacmanBackend>());
+  }
+
+  return foundBackends;
 }
 }  // namespace Packages
