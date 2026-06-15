@@ -1,0 +1,8 @@
+[Unit]
+Description=maintenanced pacman service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/yum update -y
+StandardOutput=journal
+StandardError=journal

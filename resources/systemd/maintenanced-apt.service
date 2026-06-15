@@ -1,0 +1,9 @@
+[Unit]
+Description=maintenanced pacman service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/apt update && /usr/bin/apt upgrade -y
+StandardOutput=journal
+StandardError=journal
+Environment="DEBIAN_FRONTEND=noninteractive"
