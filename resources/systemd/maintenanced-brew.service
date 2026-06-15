@@ -1,0 +1,8 @@
+[Unit]
+Description=maintenanced pacman service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/brew update && /usr/bin/brew upgrade
+StandardOutput=journal
+StandardError=journal
