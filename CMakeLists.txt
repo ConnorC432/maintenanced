@@ -24,6 +24,8 @@ add_executable(maintenanced
         src/RGBLighting/RGBController.h
         src/Packages/PackageManagerController.cpp
         src/Packages/PackageManagerController.h
+        src/CPU/CPULimiter.cpp
+        src/CPU/CPULimiter.h
 )
 
 target_include_directories(maintenanced PRIVATE include)
